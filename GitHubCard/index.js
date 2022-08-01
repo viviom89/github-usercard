@@ -7,7 +7,7 @@ import axios from 'axios';
 
 axios.get(`https://api.github.com/users/viviom89`)
 .then(resp => {
-  console.log(resp.data);
+  document.querySelector(".cards").appendChild(githubCard(resp.data));
 })
 .catch(err => console.error(err))
 
@@ -42,7 +42,7 @@ function githubCard(gitInfo) {
   const img = document.createElement("img");
   const cardInfo = document.createElement("div");
   const name = document.createElement("h3");
-  const username = document.createElement("p");
+  const login = document.createElement("p");
   const location = document.createElement("p");
   const profile = document.createElement("p");
   const profileLink = document.createElement("a");
@@ -52,8 +52,8 @@ function githubCard(gitInfo) {
   
   img.src = gitInfo.avatar_url;
   img.alt = "github user";
-  name = gitInfo.name;
-  login = gitInfo.login;
+  name.textContent = gitInfo.name;
+  login.textContent = gitInfo.login;
   location.textContent = gitInfo.location;
   profile.textContent = "Profile";
   profileLink.textContent = "Link to profile";
@@ -61,6 +61,19 @@ function githubCard(gitInfo) {
   followers.textContent = `Followers: ${gitInfo.followers}`;
   following.textContent = `Following: ${gitInfo.following}`;
   bio.textContent = gitInfo.bio;
+
+  card.appendChild(img);
+  card.appendChild(cardInfo);
+  cardInfo.appendChild(name);
+  cardInfo.appendChild(login);
+  cardInfo.appendChild(location);
+  cardInfo.appendChild(profile);
+  profile.appendChild(profileLink);
+  cardInfo.appendChild(followers);
+  cardInfo.appendChild(following);
+  cardInfo.appendChild(bio);
+
+  return card;
 }
 /*
   STEP 3: Create a function that accepts a single object as its only argument.
